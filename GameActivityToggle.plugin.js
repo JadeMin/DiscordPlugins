@@ -127,8 +127,7 @@ class GameActivityToggle {
     // Use flexMarginReset prop to find the selector for the taskbar row.
     const selector = (BdApi.findModuleByProps("flexMarginReset", "flex").flex || "").split(" ")[0];
     if (!selector) {
-      console.error("GameActivityToggle failed to start up: Selector not found?");
-      return false;
+      return "GameActivityToggle failed to start up: Selector not found?";
     }
 
     // If there are multiple elements found with this selector then the user is most likely in a call. Use the appropriate one
