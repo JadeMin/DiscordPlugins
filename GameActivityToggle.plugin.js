@@ -48,7 +48,7 @@ class GameActivityToggle {
   tooltipReference = null;
   soundReference = null;
   observer = null;
-  soundToggled = true;
+  soundToggled = null;
   gameActivity = true;
 
   constructor() {
@@ -108,9 +108,16 @@ class GameActivityToggle {
       BdApi.saveData(this.getName(), "soundToggled", "true");
     }
 
-    // Create our DOM elements
-    this.createButton();
-    this.createTooltip();
+    // Create our DOM elements (if there's no TypeError)
+    this.interval = setInterval(function(self){
+      const error = self.createButton();
+      if (!error) {
+        self.createTooltip();
+        clearInterval(self.interval);
+      } else {
+        console.error(error);
+      }
+    }, 1000, this);
 
     // Watch for change
     BdApi.findModuleByProps("guildPositions").addChangeListener(this.checkForChange);
@@ -121,7 +128,7 @@ class GameActivityToggle {
     const selector = (BdApi.findModuleByProps("flexMarginReset", "flex").flex || "").split(" ")[0];
     if (!selector) {
       console.error("GameActivityToggle failed to start up: Selector not found?");
-      return;
+      return false;
     }
 
     // If there are multiple elements found with this selector then the user is most likely in a call. Use the appropriate one
@@ -150,8 +157,7 @@ class GameActivityToggle {
     }
 
     if (!row) {
-      console.log(rows);
-      throw new Error("Could not find correct row?");
+      return "Could not find correct row";
     }
 
     this.btnReference = row.firstElementChild.cloneNode(true);
@@ -175,6 +181,7 @@ class GameActivityToggle {
         subtree: false,
       });
     }
+    return false;
   }
 
   createTooltip() {
