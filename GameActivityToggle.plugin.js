@@ -1,6 +1,6 @@
 /**
  * @name GameActivityToggle
- * @version 1.2.6
+ * @version 1.2.7
  * @description Simple plugin that adds the \"display game activity\" setting
  * on the home toolbar so you can toggle it easier when you don't want your friends knowing how much you play video games.
  *
@@ -227,9 +227,7 @@ class GameActivityToggle {
 
     // In order to preserve the tooltipPointer but also change the message we have to do this
     const innerTooltipHTML = this.tooltipReference.firstElementChild.innerHTML.split("Turn");
-    this.tooltipReference.firstElementChild.innerHTML = `${innerTooltipHTML[0]} Turn ${
-      this.gameActivity ? "off" : "on"
-    } game activity`;
+    this.tooltipReference.firstElementChild.innerHTML = `${innerTooltipHTML[0]} Turn ${this.gameActivity ? "off" : "on"} game activity`;
 
     this.btnReference.setAttribute("aria-checked", `${this.gameActivity ? "true" : "false"}`);
 
@@ -276,9 +274,7 @@ class GameActivityToggle {
       this.btnReference.firstElementChild.innerHTML = this.gameActivity ? enabledIcon : disabledIcon;
 
       const innerTooltipHTML = this.tooltipReference.firstElementChild.innerHTML.split("Turn");
-      this.tooltipReference.firstElementChild.innerHTML = `${innerTooltipHTML[0]} Turn ${
-        this.gameActivity ? "off" : "on"
-      } game activity`;
+      this.tooltipReference.firstElementChild.innerHTML = `${innerTooltipHTML[0]} Turn ${this.gameActivity ? "off" : "on"} game activity`;
 
       this.btnReference.setAttribute("aria-checked", `${this.gameActivity ? "true" : "false"}`);
       this.btnReference.addEventListener("click", this.onToggle);
