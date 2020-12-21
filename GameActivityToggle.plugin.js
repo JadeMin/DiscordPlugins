@@ -156,6 +156,7 @@ class GameActivityToggle {
     }
 
     if (!row) {
+      console.log(rows);
       return "Could not find correct row";
     }
 
